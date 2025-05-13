@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="権之助坂のランチまつりです。2025年3月24日～31日開催">
+    <title>権之助坂ランチまつり2025春</title>
+    <link rel="stylesheet" href="css/normalize.css"><!--ブラウザ種類ごとの違いをなくす https://necolas.github.io/normalize.css/ -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+
+</head>
+<body>
+<header>
+    <h1><a href="index.html"><img src="images/logo.png" alt="権之助坂ランチまつり2025春"></a></h1>
+    <nav>
+        <ul class="pc_menu">
+            <!-- <li><a href="index.html">HOME</a></li> -->
+            <li class="nav_item1"><a href="index.html#announce">ご案内</a></li>
+            <li class="nav_item1"><a href="index.html#map">ランチマップ</a></li>
+            <li class="nav_item1"><a href="index.html#shop">店舗一覧</a></li>
+            <li class="nav_item1"><a href="index.html#access">アクセス</a></li>
+        </ul>
+       <!-- ハンバーガーメニューの表示・非表示を切り替えるチェックボックス -->
+       <input id="drawer_input" class="drawer_hidden" type="checkbox">
+       <!-- ハンバーガーアイコン -->
+       <label for="drawer_input" class="drawer_open"><span></span></label>
+       <!-- ハンバーガー内メニュー -->
+       <div class="drawer_nav_content">
+            <ul class="drawer_nav_list">
+                <!-- <li class="drawer_nav_item"><a href="index.html">HOME</a></li> -->
+                <li class="drawer_nav_item"><a class="drawer_asharp" href="index.html#announce">ご案内</a></li>
+                <li class="drawer_nav_item"><a class="drawer_asharp" href="index.html#map">ランチマップ</a></li>
+                <li class="drawer_nav_item"><a class="drawer_asharp" href="index.html#shop">店舗一覧</a></li>
+                <li class="drawer_nav_item"><a class="drawer_asharp" href="index.html#access">アクセス</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+    <br><h2 class="section_title">作成中</h2><br>
+</main>
+<footer>
+    <div class="footer_contents">
+        <div class="name_address">
+            <h2 class="ourname">権之助坂ランチまつり2025春</h2>
+            <img src="images/logo.png">
+            <table class="address">
+                <tr><th>Instagram</th><td><a href="error.html" target="_blank"><img src="images/icon-rainbow-insta3_32x32.png"></a></td></tr>
+                <tr><th>X(Twitter)</th><td><a href="error.html" target="_blank"><img src="images/icon-rainbow-twitter1_32x32.png"></a></td></tr>
+            </table>
+        </div>
+        <nav><ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="index.html#announce">ご案内</a></li>
+            <li><a href="index.html#map">ランチマップ</a></li>
+            <li><a href="index.html#shop">店舗一覧</a></li>
+            <li><a href="index.html#access">アクセス</a></li>
+        </ul></nav>
+    </div>
+    <p class="copyright"><small>&copy; 権之助坂ランチまつり実行委員会</small></p> <!--サイトの最後であることを感覚的にわかりやすくするには右に配置する-->
+</footer>
+<!-- JavaScript -- 初期表示時に必要ないなら、bodyの一番下に持っていく -->
+<script src="js/jquery-3.7.1.min.js"></script>
+<script>
+$(function () {
+    /********************* ハンバーガーメニュークリック時にメニューを隠す *********************/
+    const checkbox = document.getElementById('drawer_input');
+    const targetElements = document.querySelectorAll('.drawer_nav_content');
+    $('a.drawer_asharp').on('click', function(event) {
+        //event.preventDefault(); // リンクのデフォルト動作を防止（例: ページ遷移など）
+        $('.drawer_nav_content').css('right', '-12rem'); // 特定のクラスを非表示に設定
+        checkbox.checked = false; // チェックボックスをオフにする
+    });
+    checkbox.addEventListener('change', () => {
+        targetElements.forEach(element => {
+            if (checkbox.checked) {
+                element.style.right = '0rem';
+            } else {
+                element.style.right = '-12rem';
+            }
+        });
+    });
+})
+</script>
+</body>
+</html>

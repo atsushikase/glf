@@ -1,0 +1,376 @@
+@charset "UTF-8";   /* contentやコメントに日本語を使うため */
+/* 配色 */
+
+html {
+    --color-bg: #F9F0E3;/* https://www.schemecolor.com/pastels-for-youth.php */
+	--color-content: #F9D7B7;/* https://www.schemecolor.com/pastels-for-youth.php */
+	--color-type-bg: #ffbf83;/* */
+	--color-5: #ffad60;/* */
+	--color-shop: #ff9a3b;/* */
+	--color-font-dark: #a56223;/* */
+	--color-font-light: #c76000;/*  */
+    --color-dark: #C79293; /* #AE9780 は #F9D7B7 の Color Shades */
+    --color-dark-dark: #5f3916; /* #AE9780 は #F9D7B7 の Color Shades */
+    /* --color-dark: #AE9780; #AE9780 は #F9D7B7 の Color Shades */
+
+    scroll-behavior: smooth;    /* 「トップへ戻る」クリック時に少し時間をかけてスクロールさせるため。他の影響不明 */
+    font-size: 100%; /* 100% は通常 1em = 1rem = 16px = 12pt , %指定にしておくと、ユーザがブラウザで指定した拡大率が反映される
+    他の px 表記もすべて rem(htmlタグのfont-sizeに対する相対) や em(親のサイズへの相対)に変更すべき */
+}
+body {
+    /* font-family:  "Noto Sans JP"; */
+    /* font-family: "Yu Mincho","Hiragino Mincho Pro",serif;
+    /* font-family: ,-apple-system, BlinkMacSystemFont, "Helvetica Neue", "游ゴシック Medium", YuGothic, YuGothicM, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; */
+    color: var(--color-font-dark);
+    /* background-color: var(--color-bg); */
+    /* background noise made by https://codeblock.at/base64-noise-generator/ */
+    background:#fdc38d url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAALVBMVEUAAAD8woz80rT81rT8xpT8zqT8ypT80qT8woT8ypz80qz81qz8xoz8zpz8voTSXv2vAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAABFVJREFUOI0FwWFL3GYAAOD3LxxJ3OVqC2WUbWVf0iR6yU7hmos1qQpZkuPycg6GWqy4D8Pa0dF9uN1d4Y62EHOvXlIrXJO45N1VGB1j7Td3ntXDDYoKbVkHRe3Wsu437HmAFLQN/j+VGnj17xpzYqJKR8FC534A2KoBCdkPzZ7Br+hUCeJaiQ8tA2h5abFHFXEc8FQqXkqgy511A/+9Djozky3HjPSkvvdRmN0a712b3t2HdA4cRRQxxA2ikUtIpOEEuz9q/uKhlAeExXqc4MxT8Gk7HfrR1WEhHgrlrx3QSYaibOR169Dqd271FaX71Jp4liHAXbRw0eJYbEr26B/fGUp8ePz+6pqSAGeEUj9HnBDIU4mjG9HzRnktx3QzEmj4tws1lR7kUaXm3jR7o9Nh046bHbDMaTsjbO5Ow1DS4aep1nJm5rQPfxwFvg8r1Iqbb0Ded4daluzNs0PL0SZY2m5K6c9zxHWnFFke5VrjsduDYx644/jLU7TGS9lQd7m604vyWPJqC6D0Nrc+F1DmQVKJZyJPz10KRYHu5QBSuxTHWK0P6QtO4OKyPcLWmm90AzjjZC9i6g0/65nu8saB0OGT2I9i4OAE/um2yiamMczyPD4hnY3XVN85YB2ZC38eF+QYar64rMgI4ay+tTwN1pDdzZBaiyHaCpQvQGTU7XHRvwhIU1q7l/fdJ1ao3UQaNmmosHHjS4AGpLw+oTrH3/hjZMcbG9093WLP4wRY4oq1Jy2L4rsmPQGrqRo+E1ylBQe8mhUD/c3ZEhRKvd2QS9uss0WdjG+BaKgBX7Q939zqFbWUsmThwOYS95qgMIc2U9v8bNnhsC2VvC7tZmWbY4DtBrpImkK+Mmvc9onspv2Jq2FZBLgY0YcTqWpL98+HLA9FbJkL+uo0SBDUvdJUeY18YFsDrqvcXVD2Pob/mOAwIF5+ixKZqXcNn+x3n8U6xXYu3xoFcmrHFFS5LvN7VYxsJOObhEDZFcAGBeNhnfkdpWCGyzS0GzZ9pZFmTRCz3dbcPEZSkh5MpQ22UZKHpyaLFkiFgRi7sqM1mD1hYAO2Xv8gGwmSAfghWZ0UsHk/1qs4jBOiXf4rq6aqgDl8KyiJqUeZ2qpaDoXtuZe8qlYHdRBCmGkrsXFQRfPfi6X09s/c+9h/bIMXobhK7CP94TX1Zc44KCDUJzO6FoBzfi6fFZ+y+ilZ6TrBGKNp7efWkgQ4r8g+g8+RU+t7ARk802uq/aG5SYErfCTuWKnjfZ/ZeD2yqpOH6YQjMBqgCrEoMKYeZI23HQk1AmX4sRaGHcD551Dz12DlNFMPaVGWKWmXZInFx+B6OrlRVr0vmJ2vkvNnVLgeEqOf3VVc4IuibSxWqFsfNMimH7kStNzfHpVl0CXdoyk0a86zq07FocJmh85ZhfoWmG43s6nhdz02eQTvzLXhhcmZlr+CT4F1v598XwwftOrZiYlEIbKveKpl+c3/Aavn+ImEcCohAAAAAElFTkSuQmCC);
+}
+a,
+a:link,
+a:visited {
+    text-decoration: none;
+    color: var(--color-font-dark);
+    /* transition: 0.4s linear;    変化時のアニメーション（hover側で設定するとhover解除時はアニメにならないのでこちらに） */
+}
+a:hover,        /* マウスをのっけた瞬間 */
+a:active {      /* クリック後、画面遷移するまで */
+    color: var(--color-shop);
+    /* 効かない transform: translate(0,5px); 少し下に移動 他の例：rotate(180deg)：反転;*/
+}
+a:hover img {
+    filter: brightness(0.8); /*  contrast(0.2);  invert(1); 白黒反転 */
+}
+img {
+    max-width: 100%;    /*親からはみ出さない*/
+    object-fit: contain; /* 縦横比を変えずに枠内に収める */
+}
+/* .mapsvg {
+    max-width: 100%;    /*親からはみ出さない*/
+/*    object-fit: contain; /* 縦横比を変えずに枠内に収める */
+/*} */
+
+/* main 全ページ共通 */
+main {
+    line-height: 1.7;
+    margin: 3rem 2.4vw 0 2.4vw;
+    /* margin-top: 54px;   トップバーの高さ */
+}
+.to_top {  /* トップへスクロールする矢印画像 */
+    z-index: 100;
+    width: 48px;
+    position: fixed;    /* ブラウザ画面の絶対位置指定とする */
+    bottom: 30px;
+    right: 30px;
+    opacity: 0.5;   /* 画像の透明度 */
+}
+.mainvisual {
+    display: flex;
+    justify-content: center;
+    margin: 52px 0 0 0 ; /* メニューバーの高さ */
+    height: 50vw;                           /* SPでは高さは可変 */
+    @media screen and (min-width:700px) {   /* PCでは高さを固定 */
+        height: 23rem;
+    }
+}
+.mainimage {
+    /* max-width: 100vw;     */
+    /* object-fit: none; */
+    /* object-fit: contain; */
+    object-fit: cover;
+    /* width: 100%; */
+    height: 100%; /* コンテナの高さにフィット */
+    width: auto;                            /* 解像度を変更せず、表示範囲を調整 */
+    @media screen and (min-width:1100px) {  /* 大きなモニタでは画像を引き延ばす */
+        width: 100%;
+    }
+}
+.section_start {    /* # で移動時に、ヘッダーに隠れてしまうことへの対応 */
+    position: relative;
+    top: -3.5rem;
+}
+.section_title {
+    /* margin: 2rem; */
+    color:  var(--color-bg);
+    background-color: var(--color-dark);
+    /* text-align: center; */
+}
+/* .announce {
+    margin-top: 3rem;
+} */
+.announce > p {
+    margin: 0 1vw;
+}
+.titlepng {
+    width: 13rem;
+}
+.mapdescription {
+    text-align: center;
+}
+#map-container {
+    margin: 0 auto;
+    width: 90%;
+    height: calc(85vh - 52px);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #FFF;
+}
+#map-image {
+    position: absolute;
+    cursor: grab;
+}
+.map a,
+.map a:link,
+.map a:visited {
+    opacity: 0.0;
+    transition: 0.3s linear; /* 変化時のアニメーション（hover側で設定するとhover解除時はアニメにならないのでこちらに） */
+    /* background-color: rgb(255, 0, 106); */
+}
+.map a:hover,        /* マウスをのっけた瞬間 */
+.map a:active {      /* クリック後、画面遷移するまで */
+    opacity: 0.7;
+    /* background-color: aqua !important;
+    transform: scale(1.02) translateX(-4px) translateY(-4px); */
+}
+.mapdownload {
+    margin-left: 2rem;
+}
+.filter_buttons {
+    @media screen and (min-width:700px) { 
+        display: flex;
+        justify-content: center;
+        }
+}
+.filter_buttons button {
+    border: var(--color-shop);
+    color: var(--color-bg);
+    /* background-color: var(--color-shop); */
+    background-color: var(--color-shop);
+    margin: 0.2rem 0.1rem;
+    padding: 0.5rem 0.3rem;
+    /*box-shadow: 0 0 0 4px #cbd6ee;*/
+    font-size: 70%;
+    @media screen and (min-width:700px) { 
+        margin: 0.2rem 0.2rem;
+    }
+    @media screen and (min-width:760px) { 
+        /* padding: 0.5rem 1rem; */
+        font-size: 80%;
+    }
+    @media screen and (min-width:910px) { 
+        padding: 0.5rem 0.8rem;
+        /* font-size: 80%; */
+    }
+}
+.filter_buttons .selected {
+    /* background-color: var(--color-type-bg); */
+    background-color: var(--color-font-light);
+}
+.filter_buttons button:hover {
+    /* border: 2px solid  var(--color-font-light); */
+    background-color: var(--color-5);
+} 
+.shop > ul {
+    padding-inline-start: 0;
+    list-style-type: none; /* リストの先頭「・」を表示しない */
+    display: flex; /* 要素を横並びに */
+    flex-wrap: wrap;
+}
+.shop_div {
+    width: 86vw;                            /* SPでは1列 */
+    @media screen and (min-width:500px) {   /* タブレットでは2列 */
+        width: 40vw;
+    }
+    @media screen and (min-width:770px) {   /* PCでは3列 */
+        width: 27vw; /* 18rem */
+    }
+    @media screen and (min-width:1100px) {   /* PCでは3列 */
+        width: 20vw; /* 18rem */
+    }
+
+    /*height: 26rem;   */
+    margin: 1vw; /* 1rem;*/
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 1rem;
+    background-color: var(--color-content);
+}
+.shop_type {
+    /*display: inline;*/
+    margin: 0 0 0 5px;
+    padding: 0 0.5vw; /* 0px 4px 0 4px; */
+    /*border: 1px solid #333;*/
+    font-size: 90%;
+    color:  var(--color-type-font); 
+    border-radius: 5px;
+    background-color: var(--color-type-bg);
+}
+.shop_name {
+    text-align: center;
+    margin: 0;
+    padding: 1.5rem 0px 1.0rem 0px;
+    font-size: 130%;
+    color:  var(--color-shop); 
+    /*background-color: #9d9;*/
+}
+.shop_comment {
+    /* display: block; */
+    margin: 1rem 0;
+    /* padding: 5px 4px 6px 4px; */
+    /*color: #333;*/
+    /* height: 7rem; */
+    line-height: 1.4;
+    font-weight: 300;
+    /* text-align: center; */
+    /* background-color: #ccc; */
+}
+.shop_in_map {
+    /* width: 300px; 枠の幅を指定 */
+    height: 250px; /* 枠の高さを指定 */
+    overflow: hidden;  /* はみ出た部分を隠す */
+    /* overflow: auto; */
+    /* overflow-x: scroll; 横スクロールのみ許可 */
+
+    /*position: relative;  ? */
+}
+.shop_in_map img {
+    /* width: 1191px !important;
+    height: 842px; */
+    /*position: absolute;  ? */
+    position: relative; 
+    object-fit: none;  /*画像を縮小せずに、枠いっぱいに表示 */
+    object-position: -370px -175px; /* X座標（横）, Y座標（縦） */
+    /*top: 0px; -370px; /* y座標に合わせて移動 */
+    /*left: 0px; -175px; /* x座標に合わせて移動 */
+  
+}
+.modal-content iframe {
+    width: 100%;
+    height: 250px;
+}
+.lunch_image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* text-align: right; */
+    /*width: auto;*/
+    margin: 1rem auto;
+    /* margin-bottom: 1rem; */
+    max-width: 100%; /*95%;*/
+    /* height: 74%; */
+    font-size: 85%;
+    /* background-color: rgb(77, 168, 77); */
+}
+.lunch_image img {
+    /* display: block; */
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: min(100%, 16rem);    /* 100%; */
+    max-height: 90%;
+    border-radius: 1rem;
+    /*object-fit: contain;*/
+    /*padding: 10px 20px;*/
+    /*background-color: #88f;*/
+}
+.lunch_image span {
+    display: flex;
+    justify-content: center;
+    /* text-align: right; */
+}
+.access_contents {
+    display: flex;
+    margin: 1vw;
+}
+.access_contents img {
+    width: 60vw;
+    margin: 1rem;
+}
+
+.modal-wrapper {
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /* padding: 10px 10px; */
+    text-align: center; /* モーダル画面の配置を中央に */
+  }
+  
+  .modal-wrapper:not(:target) {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s, visibility .3s;
+  }
+  
+  .modal-wrapper:target {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .4s, visibility .4s;
+  }
+  
+  .modal-wrapper::after {
+    display: inline-block;
+    height: 100%;
+    margin-left: -.05em;
+    vertical-align: middle;
+    content: ""
+  }
+  
+  .modal-wrapper .modal-window {
+    box-sizing: border-box;
+    display: inline-block;
+    z-index: 20;
+    position: relative;
+    width: 70%;
+    max-width: 600px;
+    padding: 10px 30px 25px;
+    border-radius: 2px;
+    background-color: var(--color-type-bg);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .6);
+    vertical-align: middle
+  }
+  
+  .modal-wrapper .modal-window .modal-content {
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: left;
+    background-color: var(--color-content);
+  }
+  
+  /* .modal-window img {
+    max-height: 100%; 
+  }60vh はOK */
+  
+  /* モーダル表示時の裏側の全画面にかぶせる画面 */
+  .modal-overlay {
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, .8)
+  }
+  
+  /* fontawesomeを利用した「×」ボタン用・・・最悪フォントがなくても表示されないだけっぽい */
+  .modal-wrapper .modal-close {
+    z-index: 20;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 35px;
+    color: #95979c !important;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 35px;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0
+  }
+  .modal-wrapper .modal-close:hover {
+    color: #2b2e38 !important
+  }

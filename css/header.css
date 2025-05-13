@@ -1,0 +1,187 @@
+@charset "UTF-8";   /* contentやコメントに日本語を使うため */
+/* 配色 */
+
+/* header */
+header {
+    display: flex;
+    /*line-height: normal;*/
+    /*align-items: flex-end;*/
+    /* padding-top: 0.3rem; */
+    position: fixed;        /* トップバーを固定する（スクロールさせない）。 */
+    top: 0;                 /* 固定位置はページの先頭 */
+    width: 100%;            /* トップバーを固定させた場合に左寄せさせない */
+    height: 52px;           /* ハンバーガーメニューの高さ（にPCメニューも合わせる） */
+    z-index: 90;            /* トップバーを固定させた場合に他の要素がスクロールしてきても後ろに隠れないように */
+    background-color: var(--color-type-bg);
+}
+header h1 {
+    margin: 0.4rem 0 0 0.5rem;
+    /* background: #bbb; */
+}
+header h1 img {
+    height: 40px;
+}
+header h1 a:hover img {
+    /*filter: brightness(0.5); なぜか効かない（元画像が黒だから？） */
+    filter: contrast(0.2);     /* invert(1); 白黒反転 */
+    /* transition: 0.8s; ゆっくり変化させる（a側ではなくhoverにかけると、戻るときに一瞬で戻ってしまう） */
+}
+header nav {
+    margin: 0 0 0 auto; /* 右に寄せる（左のマージンを最大にする） */
+    /* background: #ddd; */
+}
+header nav ul {
+    list-style-type: none; /* リストの先頭「・」を表示しない */
+    padding: 0;
+    display: flex; /* 横並びにする */
+    margin-block-start: 0.1rem; /* デフォルト 1em */
+    margin-block-end: 0.1rem;   /* デフォルト 1em */
+    /* background-color: #ccc; */
+}
+header nav ul li {
+    box-sizing: border-box;
+    margin: 0.3rem 1rem 0.3rem 0;
+    padding: 0.1rem 0.1rem; /* a リンク文字までの余白 */
+    line-height: 1rem; /* 文字の高さ・・・クリック可能な箱の高さ */
+    /* height: 2rem; */
+    /* background-color: #eee; */
+}
+
+header nav ul a,
+header nav ul a:link,
+header nav ul a:visited {
+    display: block; /* クリック可能エリアを文字だけでなくブロック全体に拡大する <-> inline */
+    padding: 0.1rem 0.3rem 0.3rem 0.3rem;/*0.2rem 0.3rem */
+    text-decoration: none;
+    color: var(--color-font-dark);    
+    transition: 0.4s linear; /* 変化時のアニメーション（hover側で設定するとhover解除時はアニメにならないのでこちらに） */
+    /* background-color: #aaa; エリア範囲確認用 */
+}
+header nav ul a:hover,      /* マウスをのっけた瞬間 */
+header nav ul a:active {    /* クリック後、画面遷移するまで */
+    /*color: #888;*/
+    /* text-decoration:underline;*/
+    transform: translate(0,5px); /* 少し下に移動 他の例：rotate(180deg)：反転;*/
+}
+header .nav_item1 a,
+header .nav_item1 a:link,
+header .nav_item1 a:visited {
+    /* padding: 0rem 0.3rem !important; */
+    padding: 0rem 0.1rem;
+}
+.pc_menu {
+    display: none;
+    margin-top: 0.4rem;
+}
+
+/************** ハンバーガーメニューに関するCSS ****************/
+/* チェックボックスを非表示にする */
+.drawer_hidden {
+    display: none;
+}
+/* ハンバーガーアイコンの設置スペース */
+.drawer_open {
+    display: flex;
+    height: 52px;
+    width: 52px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 100;/* 重なり順を一番上にする */
+    cursor: pointer;
+}
+/* ハンバーガーメニューのアイコン */
+.drawer_open span,
+.drawer_open span:before,
+.drawer_open span:after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 25px;
+    border-radius: 3px;
+    background: #333;
+    transition: 0.5s;
+    position: absolute;
+}
+/* 三本線の一番上の棒の位置調整 */
+.drawer_open span:before {
+    bottom: 8px;
+}
+/* 三本線の一番下の棒の位置調整 */
+.drawer_open span:after {
+    top: 8px;
+  }
+  /* アイコンがクリックされたら真ん中の線を透明にする */
+  #drawer_input:checked ~ .drawer_open span {
+    background: rgba(255, 255, 255, 0);
+  }
+  /* アイコンがクリックされたらアイコンが×印になように上下の線を回転 */
+  #drawer_input:checked ~ .drawer_open span::before {
+    bottom: 0;
+    transform: rotate(45deg);
+  }
+  #drawer_input:checked ~ .drawer_open span::after {
+    top: 0;
+    transform: rotate(-45deg);
+}
+/* メニューのデザイン*/
+.drawer_nav_content {
+    width: 8rem; /* 10rem; */
+    height: 9.5rem; /* 15rem; */
+    position: fixed;
+    top: 3rem;
+    /* left: 100%; メニューを画面の外に飛ばす */
+    right: -12rem; /* メニューを画面の外に飛ばす */
+    z-index: 99;
+    background-color: var(--color-font-dark);
+    transition: .3s;
+}
+/* メニュー黒ポチを消す */
+.drawer_nav_list {
+    flex-direction: column;
+    list-style: none;       /* 「・」を付けない */
+}
+.drawer_nav_item {
+    display: block;
+    align-items: center;     /* 縦・中央ぞろえ */
+    /* height: 1.5rem; */
+    /* background-color: #aaa; */
+}
+.drawer_nav_item > span {
+    display: block;
+    color: #aaa;
+    padding: 0.6rem 0.5rem;
+    background-color: #444c;
+}
+.drawer_nav_item a,
+.drawer_nav_item a:link,
+.drawer_nav_item a:visited {
+    display: block; /* クリック可能エリアを文字だけでなくブロック全体に拡大する <-> inline */
+    transition: 0.4s linear;    /* 変化時のアニメーション（hover側で設定するとhover解除時はアニメにならないのでこちらに） */
+    color: #eee;
+    /*background-color: #888; エリア範囲確認用*/
+}
+.drawer_nav_item a:hover,      /* マウスをのっけた瞬間 */
+.drawer_nav_item a:active {    /* クリック後、画面遷移するまで */
+    background-color: #666;
+}
+/* アイコンがクリックされたらメニューを表示 */
+#drawer_input:checked ~ .drawer_nav_content {
+    right: 0rem; 
+}
+@media screen and (min-width:670px) {
+    .pc_menu {
+        display: flex;
+    }
+    .drawer_open {
+        display: none;
+    }
+}
+ /* 790px */
+/* @media screen and (min-width:982px) {
+    header .nav_item1 a,
+    header .nav_item1 a:link,
+    header .nav_item1 a:visited  {
+        padding: 0rem 0.3rem;
+    }
+} */

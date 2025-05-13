@@ -1,0 +1,122 @@
+@charset "UTF-8";   /* contentやコメントに日本語を使うため */
+
+/* footer */
+footer {
+    font-size: calc(1vw + 0.5rem); /* calc(100vw / 15) 500% 260% 2.6rem; /* 1.8 */
+    background-color: var(--color-dark-dark);
+    color: var(--color-bg);
+    padding: 2vw 1vw 1vw 1vw; /* 3rem 1.5rem 1.5rem 1.5rem 30px 20px 20px 20px; */
+}
+footer .footer_contents {
+    display: flex; /* 横並びにする */
+    /* margin-block-end: 20px; paddingでもmarginでもよさそうだが*/
+    /*padding: 0 0 30px 0;    /*  */
+    /*margin: 0 0 30px 0;     /*  */
+}
+
+footer .name_address {
+    width: 70%;
+    /* background: #ddd; */
+}
+footer .mark_name {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+footer .mark_name > img {
+    max-width: calc(11vw + 1rem);  /* 11vw; 6rem 15%; */
+    margin: 0 5% 0 5%;
+}
+footer .ourname {
+    /* display: flex; 横並びにする */
+    /*font-family: "Noto Serif JP",serif; 'Noto Serif CJK JP';*/
+    font-size: 1.5vw; /* calc(100vw / 15) 500% 260% 2.6rem; /* 1.8 */
+    font-weight: normal;
+    /*text-decoration: none;*/
+    /*margin-block-start: 0px;
+    margin-block-end: 10px;  paddingでもmarginでもよさそうだが*/
+    /*padding: 0 0 30px 0;      */
+    margin: 1rem 0 1rem 0rem;
+}
+
+/* 連絡先 */
+footer table {
+    border-spacing: 0px;
+    /*line-height: 0;*/
+    /* border-collapse: collapse; collapse:隣接するセルの枠線を重ねる separate:枠線の間隔を空ける */
+}
+footer td {
+    padding: 0 0.2rem;
+    /* min-width: 83px; 折り返しが発生しないように設定値を決めた */
+}
+footer nav {
+    display: flex;
+    align-items: center;    /* 上下真ん中に置く */
+    justify-content: center; /* 左右真ん中に置く */
+    width: 30vw;
+    /*margin: 0px 1vw;    */
+    /* background: #ddd; */
+}
+footer .address{
+    /*justify-content: center;  ←効かない　　配置を真ん中に */
+    margin-left: calc(15vw - 4rem) ;  /* 10% */
+    /* background: #ccc; */
+    /* height: 70%;    指定しないと、親の高さに合わせて均等になるように高さが調整される */
+}
+footer .address th {
+    text-align: right;
+    color: var(--color-bg); 
+}
+footer .address img {
+    /*margin: 0 0 0 5%;*/
+    padding: 0.4rem;
+    width: 1.2rem;
+    vertical-align: bottom; /* デフォルトでは画像の下端は文字の下端ではなく、アルファベットのベースライン(yやpの下髭を無視する）に合わせてしまう。これをyやpの下髭まで含めた下端に合わせる */
+}
+footer ul {
+    list-style-type: none; /* リストの先頭「・」を表示しない */
+    margin-block-start: 0;      /* デフォルトが 1em のため（上が空いてしまう） */
+    margin-block-end: 0;
+    padding-inline-start: 0px;  /* デフォルトが 40px のため（左が空いてしまう） */
+}
+footer > ul {   /* 「サイトマップ」「プロパティ」用 */
+    margin: 0 0 5px;
+    padding: 0;
+    display: flex; /* 横並びにする */
+    justify-content: flex-end; /* 右寄せにする（配下のブロックたちを） */
+}
+footer > ul li {
+    margin: 0 0 0 20px;
+    /* font-size: 80%; */
+}
+footer nav li {
+    padding-top: 0.4rem;
+}
+footer a,
+footer a:link,
+footer a:visited
+/*footer ul li a,
+footer ul li a:link,
+footer ul li a:visited*/ {
+    text-decoration: none;
+    /* font-size: 13px; */
+    color: var(--color-bg); /*  */
+    /* box-shadow: 3px 3px 0 #000; 影・ドロップシャドウをつける */
+}
+footer a:hover
+/*footer ul li a:hover*/ {
+    color: var(--color-type-bg);    /* opacity(透明度)で変化させるのも良い（背景次第） */
+    text-decoration:underline;
+    transform: scale(1.2);  /* なぜか効かない */
+}
+
+footer .copyright {
+    margin: 0;
+    text-align: right;
+    color: var(--color-bg); 
+}
+@media screen and (max-width: 940px) {
+    footer .address img {
+        width: calc(0.4rem + 50vw / 50); /*  0.6rem;*/
+    }
+}
