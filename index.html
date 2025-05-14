@@ -66,13 +66,15 @@
             <h2 class="section_title">ランチマップ</h2>
             <!-- <iframe src="https://www.google.com/maps/d/embed?mid=1DO6P-kyMv-RKE4nOpvKcMByA0xv6IFY&ehbc=2E312F" width="640" height="480"></iframe> -->
             <!-- <img src="images/map_gonnosuke-map.png" class="mappng"> -->
-            <div class="mapdescription">上下左右に移動できます。店舗をクリックして詳細表示。</div>
+            <div class="mapdescription">地図は上下左右に移動、拡大縮小できます。店舗をクリックして詳細表示。</div>
             <div id="map-container">
+            <!-- <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1191px"
+            height="842px" viewBox="0 0 1191 842" style="enable-background:new 0 0 1191 842;" xml:space="preserve" id="map-image"> -->
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1191px"
-            height="842px" viewBox="0 0 1191 842" style="enable-background:new 0 0 1191 842;" xml:space="preserve" id="map-image">
+            height="842px" xml:space="preserve" id="map-image">
                 <g id="background">
-                    <image style="overflow:visible;" width="1191" height="842" xlink:href="images/map_gonnosuke-map.png" >
-                    </image>
+                    <!--<image style="overflow:visible;" width="1191" height="842" xlink:href="images/map_gonnosuke-map.png"></image>-->
+                    <image style="overflow:visible;" xlink:href="images/map_gonnosuke-map.png"></image>
                 </g>
                 <a xlink:href="#s02"><g id="shop02">
                     <path style="fill:#000000;" d="M843.394,189.516c0,6.627-5.373,12-12,12h-74.911c-6.627,0-12-5.373-12-12V69.522
