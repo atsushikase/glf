@@ -108,9 +108,9 @@ main {
     text-align: center;
 }
 #map-container {
-    margin: 0 auto;
-    width: 90%;
-    height: calc(85vh - 52px);
+    margin: 0 2rem 0 2rem;
+    width: calc(100% - 4rem);
+    height: calc(80vh - 52px);
     overflow: hidden;
     position: relative;
     border: 1px solid #FFF;
@@ -119,15 +119,15 @@ main {
     position: absolute;
     cursor: grab;
 }
-.map a,
-.map a:link,
-.map a:visited {
+#map-image a,
+#map-image a:link,
+#map-image a:visited {
     opacity: 0.0;
     transition: 0.3s linear; /* 変化時のアニメーション（hover側で設定するとhover解除時はアニメにならないのでこちらに） */
     /* background-color: rgb(255, 0, 106); */
 }
-.map a:hover,        /* マウスをのっけた瞬間 */
-.map a:active {      /* クリック後、画面遷移するまで */
+#map-image a:hover,        /* マウスをのっけた瞬間 */
+#map-image a:active {      /* クリック後、画面遷移するまで */
     opacity: 0.7;
     /* background-color: aqua !important;
     transform: scale(1.02) translateX(-4px) translateY(-4px); */
