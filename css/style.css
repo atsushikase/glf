@@ -107,6 +107,24 @@ main {
 .mapdescription {
     text-align: center;
 }
+.zoom_controls {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column; /* 縦並び */
+    gap: 5px;
+    z-index: 10; /* SVGの上に表示 */
+}
+.zoom_controls button {
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #fffb;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
 #map-container {
     margin: 0 2rem 0 2rem;
     width: calc(100% - 4rem);
@@ -117,6 +135,10 @@ main {
 }
 #map-image {
     position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: center center;
+    translate: -50% -50%;
     cursor: grab;
 }
 #map-image a,
@@ -139,7 +161,7 @@ main {
     @media screen and (min-width:700px) { 
         display: flex;
         justify-content: center;
-        }
+    }
 }
 .filter_buttons button {
     border: var(--color-shop);
