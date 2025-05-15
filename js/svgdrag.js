@@ -167,7 +167,7 @@ mapImage.addEventListener("touchmove", (e) => {
 
     //if (lastTouchDistance != null) {
     //    if (e.deltaY < 0) {
-    if (Math.abs(distance - lastTouchDistance) > 10) {
+    if (Math.abs(distance - lastTouchDistance) > 5) {
         if (distance - lastTouchDistance > 0) {
             scaleI += 0.1;        // 拡大
         } else {
