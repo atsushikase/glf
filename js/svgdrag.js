@@ -162,8 +162,9 @@ mapImage.addEventListener("touchmove", (e) => {
     const distance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
 
     //if (lastTouchDistance != null) {
-    if (lastTouchDistance > 10) {
-        if (e.deltaY < 0) {
+    //    if (e.deltaY < 0) {
+    if (Math.abs(distance - lastTouchDistance) > 10) {
+        if (distance - lastTouchDistance > 0) {
             scaleI += 0.1;        // 拡大
         } else {
             scaleI -= 0.1;        // 縮小
@@ -172,9 +173,9 @@ mapImage.addEventListener("touchmove", (e) => {
         scaleI = Math.min(Math.max(scaleI, scaleIMin), scaleIMax);
         // updateViewBox();
         updateTransform();
+        
+        lastTouchDistance = distance;
     }
-
-    lastTouchDistance = distance;
 });
 
 mapImage.addEventListener("touchend", () => {
