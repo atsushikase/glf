@@ -110,12 +110,14 @@ mapImage.addEventListener("dragstart", (event) => event.preventDefault());
 //     startY = e.clientY;
 //     mapImage.style.cursor = "grabbing";
 // });
-mapImage.addEventListener("pointerdown", startDrag);
+//mapImage.addEventListener("pointerdown", startDrag);
+mapImage.addEventListener("mousedown", startDrag);
+mapImage.addEventListener("touchdstart", startDrag);
 
-// document.addEventListener("mousemove", (e) => {
+document.addEventListener("mousemove", moveDrag);
+document.addEventListener("touchmove", moveDrag, { passive: false }); // スクロール防止
 // document.addEventListener("pointermove", moveDrag);
-// document.addEventListener("touchmove", moveDrag, { passive: false }); // スクロール防止
-document.addEventListener("pointermove", moveDrag, { passive: false }); // スクロール防止。{ passive: false }は、スマホにだけ必要な処理。問題があるようならイベントを mousemoveとtouchmoveに分け、touchmoveだけにする。
+// document.addEventListener("pointermove", moveDrag, { passive: false }); // スクロール防止。{ passive: false }は、スマホにだけ必要な処理。問題があるようならイベントを mousemoveとtouchmoveに分け、touchmoveだけにする。
 // 【Copilot解説】通常、touchmove イベントはスマホやタブレットで発生すると、デフォルトで画面のスクロールが行われます。これを防ぐためには event.preventDefault() を実行する必要があります。しかし、多くのモダンブラウザでは、スクロールのパフォーマンスを最適化するために passive イベントリスナーを採用しており、デフォルトでは event.preventDefault() を適用できません。
 // そのため、{ passive: false } を指定すると、ブラウザが 「このイベントでは preventDefault() を使用することがある」 と認識し、適用できるようになります。
 
@@ -124,8 +126,10 @@ document.addEventListener("pointermove", moveDrag, { passive: false }); // ス�
 //     isDragging = false;
 //     mapImage.style.cursor = "grab";
 // });
-document.addEventListener("pointerup", endDrag);
-
+//document.addEventListener("pointerup", endDrag);
+document.addEventListener("mouseup", endDrag);
+document.addEventListener("touchend", endDrag);
+    
 // ズームボタンイベント
 zoomInButton.addEventListener("click", () => {
     scaleI += 1;        // 拡大
