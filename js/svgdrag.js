@@ -169,9 +169,9 @@ mapImage.addEventListener("touchmove", (e) => {
     //    if (e.deltaY < 0) {
     if (Math.abs(distance - lastTouchDistance) > 5) {
         if (distance - lastTouchDistance > 0) {
-            scaleI += 0.1;        // 拡大
+            scaleI += 0.2;        // 拡大
         } else {
-            scaleI -= 0.1;        // 縮小
+            scaleI -= 0.2;        // 縮小
         }
         // 最小・最大制限
         scaleI = Math.min(Math.max(scaleI, scaleIMin), scaleIMax);
