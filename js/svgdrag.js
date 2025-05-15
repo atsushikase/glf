@@ -1,125 +1,155 @@
+let startX, startY;
+let offsetX = 0, offsetY = 0;
+let viewWidth, viewHeight;  // 画面表示域の幅と高さ
+let viewBoxX, viewBoxY;     // svg画像のどの位置を画面表示域の左上にするか
+let svgWidth, svgHeight;    // svg画像全体の幅と高さ
+//let scale = 1; // 拡大縮小用のスケール変数 画像サイズ*拡大*倍率
+let scaleI = 0; // 拡大縮小用のスケール変数 段階
+const scaleIMax = 10; // 拡大の最大
+const scaleIMin = -10; // 拡大の最小
+const scaleC = 1.1; // 拡大縮小１段階の拡大率
+let isDragging = false;
+let lastTouchDistance = null; // スマホのピンチイン・ピンチアウト
+
 // const mapImage = document.getElementById("map-image"); // jpegの場合？
 const mapImage = document.querySelector("#map-image"); /* svgの場合：querySelector では "map-image" をタグ名として扱ってしまうため、#が必要*/
 
 // const mapContainer = document.getElementById("map-container"); // jpegの場合？
 const mapContainer = document.querySelector("#map-container"); // 表示エリアのコンテナ svgの場合：
+const zoomInButton = document.getElementById("zoomIn");
+const zoomOutButton = document.getElementById("zoomOut");
 
-let isDragging = false;
-// let startX, startY, initialX, initialY;
-let startX, startY;
-let viewWidth, viewHeight;  // 画面表示域の幅と高さ
-let viewBoxX, viewBoxY;     // svg画像のどの位置を画面表示域の左上にするか
-let svgWidth, svgHeight;    // svg画像全体の幅と高さ
-let scale = 1; // 拡大縮小用のスケール変数 数字の倍率で画像サイズが*拡大*される
-
-// **viewBox 更新関数**
-function updateViewBox() {  //SVGにおけるViewBoxのWidth/Heightは、ViewPort右下の座標の表示位置を指す？（超わかりにくい）
-    // console.log("X",viewBoxX," Y",viewBoxY," W/s",Math.floor(svgWidth/scale)," H/s",Math.floor(svgHeight/scale)," s",Math.floor(scale*10)/10);
-    mapImage.setAttribute("viewBox", `${viewBoxX} ${viewBoxY} ${svgWidth / scale} ${svgHeight / scale}`);
+// SVGのサイズを取得(拡大縮小の適用後のサイズ)
+function getSvgSize() {
+    const bbox = mapImage.getBoundingClientRect();
+    return { width: bbox.width, height: bbox.height };
 }
 
-// **初回表示時に中央配置**
-window.addEventListener("load", () => {
-    const rect = mapImage.getBoundingClientRect();
-    svgWidth = rect.width;
-    svgHeight = rect.height;
-
-    // 画面表示領域の幅と高さを取得
-    updateViewBoxSize();
-
-    // **中央位置を計算**
-    viewBoxX = (svgWidth - viewWidth) / 2;
-    viewBoxY = (svgHeight - viewHeight) / 2;
-    // viewBoxX = 0;
-    // viewBoxY = 0;
-    if (viewBoxX < 0) viewBoxX = 0; // 左端が切れるまでドラッグしたらそれ以上いかないようにする
-    if (viewBoxY < 0) viewBoxY = 0; // 上端が切れるまでドラッグしたらそれ以上いかないようにする
-
-    updateViewBox();
-});
-
-// 画面表示領域の幅と高さを取得
-function updateViewBoxSize() {
-    const containerRect = mapContainer.getBoundingClientRect();
-    viewWidth = containerRect.width;
-    viewHeight = containerRect.height;
+// SVG再描画（ドラッグ時や拡大縮小時に使う）
+function updateTransform() {
+    mapImage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scaleC**scaleI})`;
 }
-// 画面表示領域の幅と高さを取得
-function updateViewBoxXY() {
-    if (svgWidth > viewWidth) {
-        if (viewBoxX > svgWidth - viewWidth) viewBoxX = svgWidth - viewWidth; // 右端制限
-    } else {
-        if (viewBoxX > 0) viewBoxX = 0; // 左端が切れるまでドラッグしたらそれ以上いかないようにする
-    }
-    if (svgHeight > viewHeight) {
-        if (viewBoxY > svgHeight - viewHeight) viewBoxY = svgHeight - viewHeight; // 下端制限
-    } else {
-        if (viewBoxY > 0) viewBoxY = 0; // 上端が切れるまでドラッグしたらそれ以上いかないようにする
-    }
-    // Math.sqrt(scale)は正確ではなく、表示がおかしくなるのだが、正しい計算がわからない。近似値として利用している
-    // if (viewBoxX > svgWidth * Math.sqrt(scale) - viewWidth) viewBoxX = svgWidth * Math.sqrt(scale) - viewWidth; // 右端制限
-    // if (viewBoxY > svgHeight * Math.sqrt(scale) - viewHeight) viewBoxY = svgHeight * Math.sqrt(scale) - viewHeight; // 下端制限
+
+// ドラッグ開始
+function startDrag(e) {
+    isDragging = true;
+    startX = e.clientX || e.touches[0].clientX;
+    startY = e.clientY || e.touches[0].clientY;
+    svg.style.cursor = "grabbing";
 }
-// ブラウザリサイズ時に `viewBox` を更新
-window.addEventListener("resize", () => {
-    updateViewBoxSize(); 
-    updateViewBoxXY();
-    updateViewBox();
-});
+
+// ドラッグ移動
+function moveDrag(e) {
+    if (!isDragging) return;
+    
+    e.preventDefault(); // スクロールを防止
+    
+    let clientX = e.clientX || e.touches[0].clientX;
+    let clientY = e.clientY || e.touches[0].clientY;
+
+    let dx = clientX - startX;
+    let dy = clientY - startY;
+
+    let newX = offsetX + dx;
+    let newY = offsetY + dy;
+
+    // SVGサイズを取得して境界を計算
+    const { width, height } = getSvgSize(); //拡大縮小適用後のサイズ
+    // let maxOffsetX = (width * scale - container.clientWidth) / 2;
+    // let maxOffsetY = (height * scale - container.clientHeight) / 2;
+    // let maxOffsetX = (width * (scaleC**scaleI) - mapContainer.clientWidth) / 2;
+    // let maxOffsetY = (height * (scaleC**scaleI) - mapContainer.clientHeight) / 2;
+    let maxOffsetX = (width - mapContainer.clientWidth) / 2;
+    let maxOffsetY = (height - mapContainer.clientHeight) / 2;
+
+    offsetX = Math.min(maxOffsetX, Math.max(-maxOffsetX, newX));
+    offsetY = Math.min(maxOffsetY, Math.max(-maxOffsetY, newY));
+
+    startX = clientX;
+    startY = clientY;
+
+    updateTransform();
+}
+// document.addEventListener("pointermove", (e) => {
+//     if (!isDragging) return;
+
+//     let dx = e.clientX - startX;
+//     let dy = e.clientY - startY;
+
+//     let newX = offsetX + dx;
+//     let newY = offsetY + dy;
+
+//     // SVGサイズを取得して境界を計算
+//     const { width, height } = getSvgSize();
+//     // let maxOffsetX = (width * (scaleC**scaleI) - mapContainer.clientWidth) / 2;
+//     // let maxOffsetY = (height * (scaleC**scaleI) - mapContainer.clientHeight) / 2;
+//     let maxOffsetX = (width - mapContainer.clientWidth) / 2;
+//     let maxOffsetY = (height - mapContainer.clientHeight) / 2;
+
+//     offsetX = Math.min(maxOffsetX, Math.max(-maxOffsetX, newX));
+//     offsetY = Math.min(maxOffsetY, Math.max(-maxOffsetY, newY));
+    
+//     startX = e.clientX;
+//     startY = e.clientY;
+//     updateTransform();
+// });
+
+// ドラッグ終了
+function endDrag() {
+    isDragging = false;
+    svg.style.cursor = "grab";
+}
+
 // ブラウザのデフォルト機能である画像のドラッグ禁止の解除を設定
 mapImage.addEventListener("dragstart", (event) => event.preventDefault());
 
 // mapImage.addEventListener("mousedown", (e) => { // PC専用であってスマホでは効かない
-mapImage.addEventListener("pointerdown", (e) => { // PC・スマホ両方に効く
-    isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
-    mapImage.style.cursor = "grabbing";
-});
+// mapImage.addEventListener("pointerdown", (e) => { // PC・スマホ両方に効く
+//     isDragging = true;
+//     startX = e.clientX;
+//     startY = e.clientY;
+//     mapImage.style.cursor = "grabbing";
+// });
+mapImage.addEventListener("pointerdown", startDrag);
 
 // document.addEventListener("mousemove", (e) => {
-document.addEventListener("pointermove", (e) => {
-    if (!isDragging) return;
-
-    let dx = e.clientX - startX;
-    let dy = e.clientY - startY;
-
-    viewBoxX -= dx;
-    viewBoxY -= dy;
-    if (viewBoxX < 0) viewBoxX = 0; // 左端が切れるまでドラッグしたらそれ以上いかないようにする
-    if (viewBoxY < 0) viewBoxY = 0; // 上端が切れるまでドラッグしたらそれ以上いかないようにする
-    updateViewBoxXY();
-
-    // updateViewBoxSize(); // `viewBox` の幅と高さを反映しつつスクロール
-    updateViewBox();
-
-    startX = e.clientX;
-    startY = e.clientY;
-});
+// document.addEventListener("pointermove", moveDrag);
+// document.addEventListener("touchmove", moveDrag, { passive: false }); // スクロール防止
+document.addEventListener("pointermove", moveDrag, { passive: false }); // スクロール防止。{ passive: false }は、スマホにだけ必要な処理。問題があるようならイベントを mousemoveとtouchmoveに分け、touchmoveだけにする。
+// 【Copilot解説】通常、touchmove イベントはスマホやタブレットで発生すると、デフォルトで画面のスクロールが行われます。これを防ぐためには event.preventDefault() を実行する必要があります。しかし、多くのモダンブラウザでは、スクロールのパフォーマンスを最適化するために passive イベントリスナーを採用しており、デフォルトでは event.preventDefault() を適用できません。
+// そのため、{ passive: false } を指定すると、ブラウザが 「このイベントでは preventDefault() を使用することがある」 と認識し、適用できるようになります。
 
 // document.addEventListener("mouseup", () => {
-document.addEventListener("pointerup", () => {
-    isDragging = false;
-    mapImage.style.cursor = "grab";
+// document.addEventListener("pointerup", () => {
+//     isDragging = false;
+//     mapImage.style.cursor = "grab";
+// });
+document.addEventListener("pointerup", endDrag);
+
+// ズームボタンイベント
+zoomInButton.addEventListener("click", () => {
+    scaleI += 1;        // 拡大
+    scaleI = Math.min(Math.max(scaleI, scaleIMin), scaleIMax);
+    updateTransform();
+});
+zoomOutButton.addEventListener("click", () => {
+    scaleI -= 1;        // 拡大
+    scaleI = Math.min(Math.max(scaleI, scaleIMin), scaleIMax);
+    updateTransform();
 });
 
 // **マウスホイールで拡大縮小**
 mapImage.addEventListener("wheel", (e) => { e.preventDefault();
-    const zoomFactor = 0.1; // ズーム倍率
     if (e.deltaY < 0) {
-        scale *= 1 + zoomFactor;        // 拡大 (1+ZF)倍にする
+        scaleI += 1;        // 拡大
     } else {
-        scale *= 1 - zoomFactor;        // 縮小
+        scaleI -= 1;        // 縮小
     }
-
     // 最小・最大制限
-    scale = Math.min(Math.max(scale, 0.5), 3);
-
-    updateViewBox();
+    scaleI = Math.min(Math.max(scaleI, scaleIMin), scaleIMax);
+    // updateViewBox();
+    updateTransform();
 });
-
-// **スマホのピンチイン・ピンチアウト**
-let lastTouchDistance = null;
 
 mapImage.addEventListener("touchmove", (e) => {
     if (e.touches.length < 2) return; // 2本指以上のタッチが必要
@@ -132,17 +162,15 @@ mapImage.addEventListener("touchmove", (e) => {
     const distance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
 
     if (lastTouchDistance != null) {
-        const zoomFactor = 0.05;
-        if (distance > lastTouchDistance) {
-            scale *= 1 + zoomFactor;            // 拡大
+        if (e.deltaY < 0) {
+            scaleI += 0.1;        // 拡大
         } else {
-            scale *= 1 - zoomFactor;            // 縮小
+            scaleI -= 0.1;        // 縮小
         }
-
         // 最小・最大制限
-        scale = Math.min(Math.max(scale, 0.5), 3);
-
-        updateViewBox();
+        scaleI = Math.min(Math.max(scaleI, scaleIMin), scaleIMax);
+        // updateViewBox();
+        updateTransform();
     }
 
     lastTouchDistance = distance;
