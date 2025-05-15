@@ -161,7 +161,8 @@ mapImage.addEventListener("touchmove", (e) => {
     // 2点間の距離を計算
     const distance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
 
-    if (lastTouchDistance != null) {
+    //if (lastTouchDistance != null) {
+    if (lastTouchDistance > 10) {
         if (e.deltaY < 0) {
             scaleI += 0.1;        // 拡大
         } else {
