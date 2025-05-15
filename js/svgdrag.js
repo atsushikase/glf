@@ -112,7 +112,7 @@ mapImage.addEventListener("dragstart", (event) => event.preventDefault());
 // });
 //mapImage.addEventListener("pointerdown", startDrag);
 mapImage.addEventListener("mousedown", startDrag);
-mapImage.addEventListener("touchdstart", startDrag);
+mapImage.addEventListener("touchstart", startDrag);
 
 document.addEventListener("mousemove", moveDrag);
 document.addEventListener("touchmove", moveDrag, { passive: false }); // スクロール防止
